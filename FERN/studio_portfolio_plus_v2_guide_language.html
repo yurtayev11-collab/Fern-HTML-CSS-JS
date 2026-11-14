@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studio — Creative Developer</title>
+<style>
+:root{--bg:#f7f8fa;--panel:#fff;--line:#e8ebef;--text:#20242c;--muted:#89919e;--blue:#3977df;--pink:#e46ca8;--green:#39a987;--shadow:0 8px 30px rgba(28,39,58,.06)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,input,textarea,select{font:inherit}button,a{ -webkit-tap-highlight-color:transparent}a{color:inherit;text-decoration:none}button{cursor:pointer}
+.app{min-height:100vh;padding:22px}.window{max-width:1480px;min-height:calc(100vh - 44px);margin:auto;background:var(--panel);border:1px solid #e9ebef;border-radius:15px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.topbar{height:54px;display:flex;align-items:center;padding:0 18px;border-bottom:1px solid var(--line);gap:16px;background:#fff;position:sticky;top:0;z-index:5}.traffic{display:flex;gap:7px}.traffic i{width:9px;height:9px;border-radius:50%;display:block;background:#ff715f}.traffic i:nth-child(2){background:#ffc34d}.traffic i:nth-child(3){background:#42c98b}.brand{font-weight:700;letter-spacing:.02em;margin-left:8px;white-space:nowrap}.brand span{color:var(--muted);font-weight:400}.search{margin:auto;width:min(420px,40%);height:30px;border:1px solid var(--line);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#a0a7b1;font-size:12px;background:#fbfcfd}.top-actions{display:flex;gap:7px;align-items:center}.small-btn,.btn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:7px 11px;color:#667080;transition:.2s}.small-btn:hover,.btn:hover{border-color:#cbd7ed;transform:translateY(-1px)}.small-btn.primary,.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.workspace{display:grid;grid-template-columns:220px minmax(0,1fr);flex:1;min-height:760px}.sidebar{border-right:1px solid var(--line);padding:18px 13px;background:#fcfcfd}.side-title{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a0a7b1;padding:0 9px 12px}.tree{display:grid;gap:4px}.tree a,.folder{padding:7px 9px;border-radius:6px;color:#727b89;font-size:12px;display:flex;align-items:center;gap:9px}.tree a.active{background:#f0f4ff;color:#315fc0}.tree a:hover{background:#f5f7fa}.folder{color:#8c94a0;font-size:11px;margin-top:8px}.dot{width:7px;height:7px;border-radius:2px;background:#6c9be8}.dot.pink{background:#e68ab8}.dot.green{background:#64b99b}.side-bottom{margin-top:35px;border-top:1px solid var(--line);padding:16px 9px;color:#a0a7b1;font-size:11px}.main{min-width:0;display:flex;flex-direction:column}.tabs{height:43px;border-bottom:1px solid var(--line);display:flex;align-items:stretch;padding:0 18px;gap:4px;overflow:auto}.tab{display:flex;align-items:center;padding:0 13px;border-right:1px solid var(--line);font-size:11px;color:#9098a5;white-space:nowrap}.tab.active{color:#333b48;border-bottom:2px solid var(--blue)}.tab b{font-weight:500;margin-left:8px;color:#b0b6c0}
+.content{padding:clamp(26px,5vw,72px);max-width:1160px;width:100%;margin:auto}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--blue);font-weight:650}.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;min-height:440px}.hero h1{font-size:clamp(42px,6vw,76px);line-height:1.02;letter-spacing:-.065em;font-weight:650;margin:18px 0 22px}.hero h1 em{font-style:normal;color:var(--blue)}.lead{font-size:16px;line-height:1.8;color:#7b8492;max-width:520px}.actions{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap}.btn{padding:11px 17px;border-radius:7px;color:#4f5968}.visual{border:1px solid var(--line);border-radius:12px;background:#fbfcfe;padding:16px;min-height:300px;position:relative;overflow:hidden}.visual-top{display:flex;gap:5px;padding-bottom:14px;border-bottom:1px solid var(--line)}.visual-top i{width:7px;height:7px;border-radius:50%;background:#d9dee6}.visual-art{height:220px;margin-top:15px;border-radius:8px;background:linear-gradient(135deg,#eaf0ff,#f7eaf2 58%,#e7f4f0);display:grid;place-items:center;position:relative;overflow:hidden}.orb{width:145px;height:145px;border-radius:42% 58% 61% 39%/42% 42% 58% 58%;background:linear-gradient(140deg,#7ca5f1,#b6a5ed 60%,#f0b5d2);box-shadow:0 22px 50px #7f91ca55;transform:rotate(-20deg);animation:morph 9s ease-in-out infinite alternate}.code-label{position:absolute;bottom:15px;right:15px;background:#fff;padding:8px 11px;border:1px solid #edf0f4;border-radius:6px;font:10px ui-monospace,monospace;color:#778191}
+.section{padding:55px 0 8px;border-top:1px solid var(--line);scroll-margin-top:30px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}.section h2{font-size:26px;letter-spacing:-.04em;margin:7px 0 0}.section-note{color:#9aa2ae;font-size:11px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{border:1px solid var(--line);border-radius:9px;background:#fff;transition:.25s;overflow:hidden}.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.card-art{height:150px;display:grid;place-items:center;overflow:hidden;position:relative;background:linear-gradient(135deg,#e9efff,#f5e9f1)}.card-art.alt{background:linear-gradient(135deg,#e8f5f0,#e8edff)}.card-art.warm{background:linear-gradient(135deg,#fff0e4,#f8e8f1)}.mock-window{width:72%;height:78%;background:#ffffffd9;border:1px solid #ffffff;border-radius:8px;box-shadow:0 12px 30px #44516b20;padding:10px;transform:rotate(-4deg);transition:.4s}.card:hover .mock-window{transform:rotate(0) scale(1.04)}.mock-bar{height:5px;width:35%;border-radius:4px;background:#b6c6e8;margin-bottom:10px}.mock-lines{height:7px;border-radius:5px;background:#dce3ef;margin:7px 0;width:85%}.mock-lines.short{width:55%}.mock-block{height:42px;border-radius:5px;background:linear-gradient(120deg,#9eb7ee,#d5b4dc);margin-top:10px}.card-body{padding:17px}.card-num{font:10px ui-monospace,monospace;color:#a4acb8}.card h3{font-size:15px;margin:12px 0 7px}.card p{font-size:12px;color:#89919e;line-height:1.7;margin:0}.tag{display:inline-block;margin-top:13px;font-size:10px;color:#4774c8;background:#f0f4ff;padding:4px 7px;border-radius:4px}.project-meta{display:flex;justify-content:space-between;align-items:center;gap:8px}.project-link{font-size:11px;color:var(--blue)}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.service{padding:19px;border:1px solid var(--line);border-radius:9px}.service .number{font:11px ui-monospace;color:#a4acb8}.service h3{font-size:15px;margin:18px 0 6px}.service p{font-size:12px;color:#89919e;margin:0;line-height:1.7}.contact{margin-top:55px;padding:26px;border:1px solid var(--line);border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:20px;background:#fcfcfd;scroll-margin-top:25px}.contact h2{font-size:22px;margin:4px 0}.contact p{color:#89919e;margin:0;font-size:12px}.footer{border-top:1px solid var(--line);padding:13px 20px;display:flex;justify-content:space-between;color:#a0a7b1;font-size:10px}.status{display:flex;align-items:center;gap:7px}.status:before{content:"";width:6px;height:6px;border-radius:50%;background:#49b78f}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:none}
+.sandbox{padding:28px clamp(16px,3vw,36px) 36px;border-top:1px solid var(--line);background:#fbfcfe;scroll-margin-top:20px}.sandbox-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:17px}.sandbox-head h2{font-size:22px;margin:4px 0}.sandbox-tools{display:flex;gap:7px;flex-wrap:wrap}.sandbox-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.editor-panel{border:1px solid #e5e9f0;border-radius:9px;overflow:hidden;background:#fff;min-width:0}.editor-title{height:34px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #edf0f4;color:#7b8492;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.editor-title strong{color:#5265a2;font-weight:600}.editor-panel textarea{display:block;width:100%;height:215px;resize:vertical;border:0;outline:0;padding:13px 14px;font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;color:#354052;background:#fff;tab-size:2;white-space:pre;overflow:auto}.preview-panel{grid-row:span 2;display:flex;flex-direction:column;min-height:470px}.preview-panel iframe{border:0;width:100%;flex:1;min-height:390px;background:#fff}.console{height:76px;overflow:auto;background:#fbfcfd;border-top:1px solid #edf0f4;padding:8px 11px;font:10px/1.5 ui-monospace,monospace;color:#7c8796}.console .err{color:#c44}.console .warn{color:#a77b2b}.sandbox-note{font-size:10px;color:#9aa2ae;margin-top:10px}
+.admin{display:none;padding:32px clamp(16px,4vw,50px);border-top:1px solid var(--line);background:#fff;scroll-margin-top:20px}.admin.open{display:block}.admin-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.admin-box{border:1px solid var(--line);border-radius:9px;padding:17px}.admin-box h3{font-size:14px;margin:0 0 14px}.field{display:grid;gap:5px;margin-bottom:11px}.field label{font-size:11px;color:#7c8593}.field input,.field textarea,.field select{width:100%;padding:9px 10px;border:1px solid #e1e6ee;border-radius:7px;background:#fff;color:#303846;font-size:12px;outline-color:#9cb7f0}.field textarea{min-height:76px;resize:vertical}.admin-list{display:grid;gap:8px}.admin-row{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #edf0f4;border-radius:7px;padding:9px 10px;font-size:12px}.admin-row button{font-size:11px;padding:5px 8px}.admin-help{font-size:11px;color:#89919e;line-height:1.6;margin:12px 0 0}
+.modal{position:fixed;inset:0;background:#1b263544;display:none;place-items:center;padding:18px;z-index:20}.modal.open{display:grid}.modal-card{background:#fff;border-radius:12px;padding:22px;max-width:420px;width:100%;box-shadow:0 20px 70px #17233733}.modal-card h3{margin:0 0 7px}.modal-card p{color:#7e8795;font-size:12px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+ .back-top{position:fixed;right:22px;bottom:22px;width:38px;height:38px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#657184;box-shadow:var(--shadow);font-size:18px;display:none;z-index:8;cursor:pointer;transition:.2s}.back-top.show{display:block}.back-top:hover{color:var(--blue);transform:translateY(-2px)}
+.help-card{max-width:520px}.help-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.help-heading h3{font-size:20px;margin:5px 0 15px}.help-list{display:grid;gap:12px}.help-list>div{padding:11px 12px;border:1px solid var(--line);border-radius:8px}.help-list b{font-size:12px}.help-list p{margin:4px 0 0;color:#89919e;font-size:12px;line-height:1.65}.help-foot{margin-top:14px;color:#929ba8;font-size:11px;line-height:1.6}
+@keyframes morph{0%{border-radius:42% 58% 61% 39%/42% 42% 58% 58%;transform:rotate(-20deg) scale(.94)}100%{border-radius:60% 40% 37% 63%/52% 60% 40% 48%;transform:rotate(18deg) scale(1.05)}}
+@media(max-width:850px){.app{padding:0}.window{border-radius:0;border:0;min-height:100vh}.workspace{grid-template-columns:55px minmax(0,1fr)}.sidebar{padding:14px 6px}.side-title,.tree a span:not(.dot),.folder,.side-bottom{display:none}.tree a{justify-content:center;padding:10px 0}.hero{grid-template-columns:1fr;gap:25px}.visual{min-height:240px}.visual-art{height:165px}.cards,.services{grid-template-columns:1fr 1fr}.search{display:none}.content{padding:34px 24px}.section{padding-top:35px}}
+@media(max-width:600px){.app{padding:0}.topbar{padding:0 10px;gap:9px}.top-actions .small-btn:first-child{display:none}.workspace{grid-template-columns:1fr}.sidebar{display:none}.tabs{padding:0 8px}.tab{padding:0 9px}.content{padding:28px 18px}.hero{min-height:auto;padding-bottom:40px}.hero h1{font-size:48px}.cards,.services,.sandbox-grid,.admin-grid{grid-template-columns:1fr}.preview-panel{grid-row:auto;min-height:400px}.preview-panel iframe{min-height:320px}.contact{align-items:flex-start;flex-direction:column}.footer{gap:8px;flex-wrap:wrap}.sandbox-head,.admin-top{align-items:flex-start;flex-direction:column}.search{display:none}}
+</style>
+</head>
+<body>
+<div class="app"><div class="window">
+<header class="topbar">
+  <div class="traffic"><i></i><i></i><i></i></div><div class="brand">studio<span> / portfolio</span></div>
+  <div class="search">⌕ &nbsp; Search projects and pages</div>
+  <div class="top-actions"><button class="small-btn" id="helpOpen">Guide</button><button class="small-btn" id="langToggle" aria-label="Change language">RU</button><button class="small-btn" onclick="goTo('work')">Work ↗</button><button class="small-btn" onclick="goTo('sandbox')">Sandbox</button><button class="small-btn primary" onclick="goTo('contact')">Contact</button></div>
+</header>
+<div class="workspace">
+<aside class="sidebar">
+  <div class="side-title">Explorer</div><nav class="tree">
+    <div class="folder">⌄ &nbsp; PORTFOLIO</div>
+    <a class="active" href="#home"><i class="dot"></i><span>index.html</span></a>
+    <div class="folder">⌄ &nbsp; PROJECTS</div>
+    <a href="#work"><i class="dot pink"></i><span>selected-work.js</span></a>
+    <a href="#services"><i class="dot green"></i><span>services.css</span></a>
+    <div class="folder">⌄ &nbsp; TOOLS</div>
+    <a href="#sandbox"><i class="dot"></i><span>sandbox.html</span></a>
+    <a href="#admin" id="adminNav"><i class="dot pink"></i><span>admin.panel</span></a>
+    <div class="folder">⌄ &nbsp; INFO</div>
+    <a href="#about"><i class="dot green"></i><span>about.md</span></a>
+    <a href="#contact"><i class="dot"></i><span>contact.json</span></a>
+  </nav><div class="side-bottom">OUTLINE<br><br>⌄ Page sections</div>
+</aside>
+<main class="main">
+<div class="tabs"><div class="tab active">◈ &nbsp; index.html <b>×</b></div><div class="tab">◇ &nbsp; projects.js</div><div class="tab">◇ &nbsp; sandbox.html</div><div class="tab">◇ &nbsp; admin.panel</div></div>
+<div class="content" id="home">
+<section class="hero" id="about">
+  <div class="reveal"><div class="eyebrow" id="heroEyebrow">Creative developer · Available for projects</div>
+  <h1 id="heroTitle">Ideas into<br><em>digital</em> reality.</h1>
+  <p class="lead" id="heroText">I design and build thoughtful digital experiences. Clean interfaces, purposeful details and technology that feels effortless.</p>
+  <div class="actions"><button class="btn primary" onclick="goTo('work')">Explore my work ↗</button><button class="btn" onclick="goTo('contact')">Get in touch</button></div></div>
+  <div class="visual reveal"><div class="visual-top"><i></i><i></i><i></i></div><div class="visual-art"><div class="orb"></div><div class="code-label">design.system / 01</div></div></div>
+</section>
+<section class="section reveal" id="work">
+  <div class="section-head"><div><div class="eyebrow">01 / Selected work</div><h2>Featured projects.</h2></div><div class="section-note">Curated concepts & case studies ↗</div></div>
+  <div class="cards" id="projectCards"></div>
+</section>
+<section class="section reveal" id="services">
+  <div class="section-head"><div><div class="eyebrow">02 / What I do</div><h2>From first sketch to launch.</h2></div></div>
+  <div class="services">
+    <article class="service"><div class="number">01</div><h3>Design & direction</h3><p>Wireframes, visual direction, UI systems and polished responsive layouts.</p></article>
+    <article class="service"><div class="number">02</div><h3>Frontend development</h3><p>Fast, accessible interfaces built with clean HTML, CSS and JavaScript.</p></article>
+    <article class="service"><div class="number">03</div><h3>Creative technology</h3><p>Prototyping, motion and interactive details that make products memorable.</p></article>
+  </div>
+</section>
+<section class="contact reveal" id="contact"><div><div class="eyebrow">03 / Contact</div><h2>Have a good idea?</h2><p>Let's turn it into something people love to use.</p></div><a class="btn primary" id="contactLink" href="mailto:hello@example.com">hello@example.com ↗</a></section>
+</div>
+
+<section class="sandbox" id="sandbox">
+  <div class="sandbox-head"><div><div class="eyebrow">04 / Built-in tool</div><h2>Code playground.</h2><div style="font-size:12px;color:#89919e">HTML, CSS и JavaScript — редактируй код и сразу смотри результат.</div></div>
+    <div class="sandbox-tools"><button class="btn primary" id="runCode">Run preview</button><button class="btn" id="resetCode">Reset</button><button class="btn" id="downloadCode">Export HTML</button></div>
+  </div>
+  <div class="sandbox-grid">
+    <div class="editor-panel"><div class="editor-title"><strong>● HTML</strong><span>index.html</span></div><textarea id="codeHtml" spellcheck="false" aria-label="HTML editor"><main class="demo">
+  <span class="eyebrow">YOUR PLAYGROUND</span>
+  <h1>Hello, <em>world.</em></h1>
+  <p>Build something useful. Your preview updates when you run the code.</p>
+  <button id="demoButton">Try interaction ↗</button>
+</main></textarea></div>
+    <div class="editor-panel"><div class="editor-title"><strong>● CSS</strong><span>styles.css</span></div><textarea id="codeCss" spellcheck="false" aria-label="CSS editor">* { box-sizing: border-box; }
+body { margin: 0; padding: 40px; font: 16px system-ui; color: #20242c; background: #f7f8fa; }
+.demo { max-width: 540px; margin: 8vh auto; }
+.eyebrow { color: #3977df; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; }
+h1 { font-size: clamp(42px, 8vw, 68px); letter-spacing: -.06em; }
+em { color: #3977df; font-style: normal; }
+p { color: #89919e; line-height: 1.7; }
+button { padding: 12px 17px; border: 0; border-radius: 7px; background: #3977df; color: white; cursor: pointer; }</textarea></div>
+    <div class="editor-panel"><div class="editor-title"><strong>● JavaScript</strong><span>app.js</span></div><textarea id="codeJs" spellcheck="false" aria-label="JavaScript editor">document.querySelector('#demoButton')?.addEventListener('click', () => {
+  console.log('Interaction works!');
+  document.querySelector('#demoButton').textContent = 'Nice work ✓';
+});</textarea></div>
+    <div class="editor-panel preview-panel"><div class="editor-title"><strong>● Preview</strong><span id="previewStatus">Ready</span></div><iframe id="codePreview" title="Code preview" sandbox="allow-scripts"></iframe><div class="console" id="codeConsole">Console output will appear here.</div></div>
+  </div>
+  <div class="sandbox-note">Безопасный изолированный предпросмотр. Не запускай неизвестный код из недоверенных источников.</div>
+</section>
+
+<section class="admin" id="admin">
+  <div class="admin-top"><div><div class="eyebrow">Private workspace</div><h2 style="margin:5px 0;font-size:23px">Admin panel</h2><div style="font-size:12px;color:#89919e">Управление содержимым портфолио в этом браузере.</div></div><button class="btn" id="closeAdmin">Close panel</button></div>
+  <div class="admin-grid">
+    <div class="admin-box"><h3>Hero & contact details</h3>
+      <div class="field"><label>Заголовок (HTML разрешён)</label><input id="editTitle" value="Ideas into&lt;br&gt;&lt;em&gt;digital&lt;/em&gt; reality."></div>
+      <div class="field"><label>Описание</label><textarea id="editDescription"></textarea></div>
+      <div class="field"><label>Email для контактов</label><input id="editEmail" type="email" value="hello@example.com"></div>
+      <button class="btn primary" id="saveSite">Save site details</button>
+    </div>
+    <div class="admin-box"><h3>Add a portfolio project</h3>
+      <div class="field"><label>Название</label><input id="newName" placeholder="Например, Northstar — SaaS dashboard"></div>
+      <div class="field"><label>Краткое описание</label><textarea id="newDescription" placeholder="Задача, решение и результат (без неподтверждённых цифр)"></textarea></div>
+      <div class="field"><label>Категория</label><input id="newCategory" placeholder="Web design / UI / Development"></div>
+      <div class="field"><label>Ссылка на проект (необязательно)</label><input id="newUrl" type="url" placeholder="https://..."></div>
+      <button class="btn primary" id="addProject">Add project</button>
+    </div>
+    <div class="admin-box" style="grid-column:1/-1"><h3>Manage projects</h3><div class="admin-list" id="adminProjects"></div><p class="admin-help">Проекты, добавленные здесь, сохраняются в localStorage этого браузера. Встроенные карточки — демонстрационные концепты, а не подтверждённые клиентские кейсы. Для настоящей публичной админ-панели с аккаунтами и общей базой нужен сервер и авторизация.</p></div>
+  </div>
+</section>
+</main>
+</div>
+<footer class="footer"><span>© <span id="year"></span> Studio Portfolio</span><span class="status">Ready to create</span><span>Designed with intention · Built for the web</span></footer>
+</div></div>
+<button class="back-top" id="backTop" title="Back to top" aria-label="Back to top">↑</button>
+<div class="modal" id="helpModal"><div class="modal-card help-card">
+  <div class="help-heading"><div><div class="eyebrow">Quick start</div><h3 id="helpTitle">Краткое руководство</h3></div><button class="small-btn" id="helpClose" aria-label="Close guide">×</button></div>
+  <div class="help-list" id="helpContent">
+    <div><b>01 · Портфолио</b><p>Открой проекты через Explorer или прокрути страницу. Ссылки на проекты добавляются в админ-панели.</p></div>
+    <div><b>02 · Песочница</b><p>Измени HTML, CSS или JS и нажми Run preview. Reset вернёт пример, Export HTML сохранит результат отдельным файлом.</p></div>
+    <div><b>03 · Админ-панель</b><p>Нажми admin.panel в Explorer, подтверди вход и редактируй описание, email и список проектов. Изменения сохраняются в этом браузере.</p></div>
+    <div><b>04 · Язык и удобство</b><p>Кнопка RU/EN переключает интерфейс. Ctrl + Enter запускает предпросмотр, Esc закрывает открытое окно.</p></div>
+  </div>
+  <div class="help-foot">Подсказка: начни с редактирования демонстрационных проектов, чтобы заменить их своими работами.</div>
+</div></div>
+<div class="modal" id="adminModal"><div class="modal-card"><h3>Open admin panel?</h3><p>Демо-режим: панель не защищена серверной авторизацией. Она предназначена для локального редактирования на этом устройстве.</p><div class="modal-actions"><button class="btn" id="cancelAdmin">Cancel</button><button class="btn primary" id="confirmAdmin">Continue</button></div></div></div>
+<script>
+const $=s=>document.querySelector(s);
+const defaultProjects=[
+ {name:'Atelier — Digital storefront',desc:'Концепт интернет-магазина с редакционной подачей, чистой типографикой и адаптивной карточкой товара.',category:'E-commerce · UI design',url:'',tone:'',demo:true},
+ {name:'Northstar — SaaS dashboard',desc:'Концепт интерфейса аналитической платформы: обзор метрик, навигация и ясная визуальная иерархия.',category:'Product design · Dashboard',url:'',tone:'alt',demo:true},
+ {name:'Forma — Creative landing',desc:'Концепт промо-сайта для креативной студии с выразительной композицией и мягкими анимациями.',category:'Web design · Motion',url:'',tone:'warm',demo:true}
+];
+let projects=load('studio-projects',defaultProjects);
+function load(key,fallback){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback}catch{return fallback}}
+function store(key,value){try{localStorage.setItem(key,JSON.stringify(value))}catch(e){alert('Не удалось сохранить: память браузера недоступна.');}}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});if(id==='admin')openAdmin();}
+function renderProjects(){
+ $('#projectCards').innerHTML=projects.map((p,i)=>`<article class="card reveal visible">
+ <div class="card-art ${p.tone||['','alt','warm'][i%3]}"><div class="mock-window"><div class="mock-bar"></div><div class="mock-lines"></div><div class="mock-lines short"></div><div class="mock-block"></div></div></div>
+ <div class="card-body"><div class="project-meta"><span class="card-num">PROJECT_${String(i+1).padStart(3,'0')}</span>${p.demo?'<span class="card-num">CONCEPT</span>':''}</div>
+ <h3>${escapeHTML(p.name)}</h3><p>${escapeHTML(p.desc)}</p><span class="tag">${escapeHTML(p.category||'Project')}</span>
+ ${p.url?`<div style="margin-top:12px"><a class="project-link" href="${escapeHTML(p.url)}" target="_blank" rel="noopener">View project ↗</a></div>`:''}</div></article>`).join('');
+ renderAdminList();
+}
+function renderAdminList(){
+ const el=$('#adminProjects');if(!el)return;
+ el.innerHTML=projects.map((p,i)=>`<div class="admin-row"><span><b>${escapeHTML(p.name)}</b> <span style="color:#9aa2ae">— ${p.demo?'demo concept':'custom project'}</span></span><button class="btn" data-delete="${i}">Delete</button></div>`).join('')||'<div style="font-size:12px;color:#89919e">Пока нет проектов.</div>';
+ el.querySelectorAll('[data-delete]').forEach(b=>b.addEventListener('click',()=>{projects.splice(Number(b.dataset.delete),1);store('studio-projects',projects);renderProjects()}));
+}
+function applySiteData(){
+ const data=load('studio-site',{title:'Ideas into<br><em>digital</em> reality.',description:'I design and build thoughtful digital experiences. Clean interfaces, purposeful details and technology that feels effortless.',email:'hello@example.com'});
+ $('#heroTitle').innerHTML=data.title;$('#heroText').textContent=data.description;$('#contactLink').href='mailto:'+data.email;$('#contactLink').textContent=data.email+' ↗';
+ $('#editTitle').value=data.title;$('#editDescription').value=data.description;$('#editEmail').value=data.email;
+}
+function openAdmin(){ $('#admin').classList.add('open');$('#adminModal').classList.remove('open');$('#admin').scrollIntoView({behavior:'smooth'}); }
+$('#adminNav').addEventListener('click',e=>{e.preventDefault();$('#adminModal').classList.add('open')});
+$('#confirmAdmin').onclick=openAdmin;$('#cancelAdmin').onclick=()=>$('#adminModal').classList.remove('open');$('#closeAdmin').onclick=()=>$('#admin').classList.remove('open');
+$('#saveSite').onclick=()=>{const data={title:$('#editTitle').value,description:$('#editDescription').value,email:$('#editEmail').value.trim()};if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)){alert('Проверь email.');return}store('studio-site',data);applySiteData();alert('Данные сохранены в этом браузере.')};
+$('#addProject').onclick=()=>{const name=$('#newName').value.trim(),desc=$('#newDescription').value.trim(),category=$('#newCategory').value.trim(),url=$('#newUrl').value.trim();if(!name||!desc){alert('Добавь название и описание проекта.');return}if(url&&!/^https?:\/\//i.test(url)){alert('Ссылка должна начинаться с http:// или https://');return}projects.push({name,desc,category,url,tone:['','alt','warm'][projects.length%3],demo:false});store('studio-projects',projects);renderProjects();['newName','newDescription','newCategory','newUrl'].forEach(id=>$('#'+id).value='')};
+$('#year').textContent=new Date().getFullYear();
+document.querySelectorAll('.tree a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.tree a').forEach(x=>x.classList.remove('active'));a.classList.add('active')}));
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Mini HTML/CSS/JS sandbox. Preview runs in a sandboxed iframe.
+const starter={html:$('#codeHtml').value,css:$('#codeCss').value,js:$('#codeJs').value};
+function buildPreview(){
+ const h=$('#codeHtml').value,c=$('#codeCss').value,j=$('#codeJs').value;
+ const safeScript=`<script>
+ const send=(type,args)=>parent.postMessage({studioSandbox:true,type,args:Array.from(args).map(x=>{try{return typeof x==='object'?JSON.stringify(x):String(x)}catch{return String(x)}})},'*');
+ ['log','info','warn','error'].forEach(k=>{const orig=console[k];console[k]=(...a)=>{send(k,a);orig.apply(console,a)}});
+ addEventListener('error',e=>send('error',[e.message+' at '+e.lineno]));
+ <\/script>`;
+ $('#codePreview').srcdoc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+c+'</style></head><body>'+h+safeScript+'<script>'+j+'<\/script></body></html>';
+ $('#previewStatus').textContent='Updated';$('#codeConsole').textContent='Preview rebuilt. Console output will appear here.';
+}
+window.addEventListener('message',e=>{if(!e.data||e.data.studioSandbox!==true)return;const line=document.createElement('div');line.className=e.data.type==='error'?'err':e.data.type==='warn'?'warn':'';line.textContent='['+e.data.type+'] '+(e.data.args||[]).join(' ');$('#codeConsole').appendChild(line);$('#codeConsole').scrollTop=$('#codeConsole').scrollHeight});
+$('#runCode').onclick=buildPreview;
+$('#resetCode').onclick=()=>{$('#codeHtml').value=starter.html;$('#codeCss').value=starter.css;$('#codeJs').value=starter.js;buildPreview()};
+$('#downloadCode').onclick=()=>{const doc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+$('#codeCss').value+'</style></head><body>'+$('#codeHtml').value+'<script>'+$('#codeJs').value+'<\/script></body></html>';const blob=new Blob([doc],{type:'text/html'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='studio-playground.html';a.click();URL.revokeObjectURL(url)};
+// Compact RU/EN interface toggle. User-authored project content is intentionally left untouched.
+const translations = {
+ ru: {
+  'helpOpen':'Guide','helpTitle':'Краткое руководство',
+  'helpContent':[
+   ['01 · Портфолио','Открой проекты через Explorer или прокрути страницу. Ссылки на проекты добавляются в админ-панели.'],
+   ['02 · Песочница','Измени HTML, CSS или JS и нажми Run preview. Reset вернёт пример, Export HTML сохранит результат отдельным файлом.'],
+   ['03 · Админ-панель','Нажми admin.panel в Explorer, подтверди вход и редактируй описание, email и список проектов. Изменения сохраняются в этом браузере.'],
+   ['04 · Язык и удобство','Кнопка RU/EN переключает интерфейс. Ctrl + Enter запускает предпросмотр, Esc закрывает открытое окно.']
+  ],
+  'heroEyebrow':'Креативная разработка · Открыт для проектов',
+  'heroText':'Проектирую и создаю продуманные цифровые продукты. Чистые интерфейсы, осмысленные детали и технологии, которыми приятно пользоваться.',
+  'workTitle':'Избранные проекты.','servicesTitle':'От первого эскиза до запуска.',
+  'contactTitle':'Есть хорошая идея?','contactText':'Давайте превратим её в продукт, которым приятно пользоваться.',
+  'sandboxTitle':'Песочница кода.','sandboxDesc':'HTML, CSS и JavaScript — редактируй код и сразу смотри результат.',
+  'run':'Запустить','reset':'Сбросить','export':'Экспорт HTML','guide':'Краткое руководство'
+ },
+ en: {
+  'helpOpen':'Guide','helpTitle':'Quick guide',
+  'helpContent':[
+   ['01 · Portfolio','Browse projects from Explorer or scroll down. Add project links in the admin panel.'],
+   ['02 · Playground','Edit HTML, CSS or JS and press Run preview. Reset restores the starter example; Export HTML saves your work as a standalone file.'],
+   ['03 · Admin panel','Choose admin.panel in Explorer and confirm. Edit the intro, email and project list. Changes are saved in this browser.'],
+   ['04 · Language & shortcuts','Use RU/EN to switch the interface. Ctrl + Enter runs the preview; Esc closes an open dialog.']
+  ],
+  'heroEyebrow':'Creative developer · Available for projects',
+  'heroText':'I design and build thoughtful digital experiences. Clean interfaces, purposeful details and technology that feels effortless.',
+  'workTitle':'Featured projects.','servicesTitle':'From first sketch to launch.',
+  'contactTitle':'Have a good idea?','contactText':"Let's turn it into something people love to use.",
+  'sandboxTitle':'Code playground.','sandboxDesc':'Edit HTML, CSS and JavaScript and see the result instantly.',
+  'run':'Run preview','reset':'Reset','export':'Export HTML','guide':'Quick guide'
+ }
+};
+let currentLang=load('studio-language','en');
+function setLanguage(lang){
+ currentLang=lang;store('studio-language',lang);document.documentElement.lang=lang;
+ $('#langToggle').textContent=lang.toUpperCase();
+ const t=translations[lang];
+ $('#helpTitle').textContent=t.helpTitle;
+ $('#helpOpen').textContent=t.guide;
+ $('#heroEyebrow').textContent=t.heroEyebrow;
+ $('#heroText').textContent=t.heroText;
+ $('#work h2').textContent=t.workTitle;
+ $('#services h2').textContent=t.servicesTitle;
+ $('#contact h2').textContent=t.contactTitle;
+ $('#contact p').textContent=t.contactText;
+ $('#sandbox h2').textContent=t.sandboxTitle;
+ $('#sandbox .sandbox-head div div:nth-child(2)').textContent=t.sandboxDesc;
+ $('#runCode').textContent=t.run;$('#resetCode').textContent=t.reset;$('#downloadCode').textContent=t.export;
+ $('#helpContent').innerHTML=t.helpContent.map(([title,body])=>`<div><b>${escapeHTML(title)}</b><p>${escapeHTML(body)}</p></div>`).join('');
+}
+$('#langToggle').addEventListener('click',()=>setLanguage(currentLang==='ru'?'en':'ru'));
+$('#helpOpen').addEventListener('click',()=>$('#helpModal').classList.add('open'));
+$('#helpClose').addEventListener('click',()=>$('#helpModal').classList.remove('open'));
+$('#helpModal').addEventListener('click',e=>{if(e.target.id==='helpModal')$('#helpModal').classList.remove('open')});
+document.addEventListener('keydown',e=>{
+ if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();buildPreview()}
+ if(e.key==='Escape'){$('#helpModal').classList.remove('open');$('#adminModal').classList.remove('open')}
+});
+const backTop=$('#backTop');
+window.addEventListener('scroll',()=>backTop.classList.toggle('show',window.scrollY>450),{passive:true});
+backTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+renderProjects();applySiteData();buildPreview();setLanguage(currentLang);
+</script>
+</body>
+</html>
